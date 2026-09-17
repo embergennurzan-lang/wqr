@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LimeBudget — личные финансы</title>
+<style>
+:root{--bg:#07151b;--panel:#0d2028;--line:#23434a;--lime:#b8ff4a;--text:#f1f6f3;--muted:#8fa8a8;--red:#ff6b76}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 70% 0%,#153a36 0,#07151b 38%,#061016 100%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+button{font:inherit}.app{min-height:100vh;display:grid;grid-template-columns:245px 1fr}aside{padding:28px 18px;border-right:1px solid var(--line);background:#041016dd;position:sticky;top:0;height:100vh}
+.brand{display:flex;gap:12px;align-items:center;margin:0 8px 30px}.bulb{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#c7ff5a;color:#143018;font-size:26px;box-shadow:0 0 30px #8dff4633}.brand h1{font-size:22px;margin:0;color:var(--lime)}.brand p{margin:4px 0 0;color:#8ca3a3;font-size:12px}
+.nav{display:grid;gap:8px}.nav button{border:0;background:transparent;color:#c7d3d2;text-align:left;padding:14px 16px;border-radius:12px;cursor:pointer}.nav button.active,.nav button:hover{background:#173c36;color:#d4ff83}.nav span{display:inline-block;width:25px}
+main{padding:28px;max-width:1500px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:18px}.top h2{margin:0;font-size:28px}.date{border:1px solid var(--line);background:#0c2028;padding:12px 16px;border-radius:12px}
+.hero{min-height:170px;border:1px solid #27676a;border-radius:18px;padding:26px;display:flex;justify-content:space-between;align-items:center;overflow:hidden;background:linear-gradient(110deg,#0c3c42,#116b6c 55%,#07333b)}.hero h3{font-size:30px;margin:0 0 8px;color:#caff70}.hero p{color:#d1e7e1;margin:0;max-width:600px}.krabs{height:175px;max-width:280px;object-fit:contain;filter:drop-shadow(0 12px 20px #0008)}
+.grid{display:grid;grid-template-columns:1.5fr .8fr;gap:18px;margin-top:18px}.card{background:linear-gradient(180deg,#0d242c,#0a1d24);border:1px solid var(--line);border-radius:16px;padding:20px}.balance{display:flex;justify-content:space-between;align-items:center;gap:20px}.label{color:#9bb1b0;font-size:13px}.big{font-size:42px;font-weight:800;color:var(--lime);margin:5px 0}.stats{display:flex;gap:12px}.stat{padding:14px 18px;border-radius:12px;min-width:145px}.income{background:#143d2d;border:1px solid #286a48}.expense{background:#40262c;border:1px solid #743943}.stat b{display:block;font-size:21px;margin-top:4px}.income b{color:#86ee83}.expense b{color:#ff7580}
+.cols{display:grid;grid-template-columns:1.4fr .8fr;gap:18px;margin-top:18px}h3{margin:0 0 15px;font-size:18px}table{width:100%;border-collapse:collapse}th,td{padding:12px 8px;border-bottom:1px solid #1e3940;text-align:left;font-size:13px}th{color:#91aaa8;font-weight:500}.tag{padding:5px 9px;border-radius:999px;font-size:11px}.tag.in{background:#1c563b;color:#9aff91}.tag.out{background:#552c35;color:#ff9ca4}.amount.in{color:#86ee83;font-weight:700}.amount.out{color:#ff7580;font-weight:700}
+.actions{display:flex;gap:10px;margin-bottom:14px}.btn{border:1px solid #41605e;background:#132a31;color:#eef6f3;padding:10px 14px;border-radius:10px;cursor:pointer}.btn.primary{background:#a9f248;color:#10240f;border-color:#b8ff4a;font-weight:700}.btn:hover{transform:translateY(-1px)}
+.bars{display:grid;gap:13px}.barline{display:grid;grid-template-columns:90px 1fr 90px;gap:10px;align-items:center;font-size:12px}.track{height:9px;background:#1a343b;border-radius:99px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#78d84b,#caff70);border-radius:99px}
+canvas{width:100%;height:190px;background:#0a1d24;border-radius:10px}.empty{padding:24px;text-align:center;color:#8da4a3}.notice{font-size:12px;color:#8fa7a6;line-height:1.5;margin-top:10px}footer{padding:24px 0;color:#718b8b;text-align:center;font-size:12px}
+@media(max-width:950px){.app{grid-template-columns:1fr}aside{height:auto;position:static;border-right:0;border-bottom:1px solid var(--line)}.nav{grid-template-columns:repeat(4,1fr)}main{padding:16px}.grid,.cols{grid-template-columns:1fr}.hero{min-height:150px}.krabs{height:125px}}
+@media(max-width:620px){.nav{grid-template-columns:1fr 1fr}.top,.balance{align-items:flex-start;flex-direction:column}.stats{width:100%;flex-direction:column}.stat{width:100%}table{font-size:11px}th:nth-child(3),td:nth-child(3){display:none}}
+</style></head>
+<body><div class="app">
+<aside><div class="brand"><div class="bulb">💡</div><div><h1>LimeBudget</h1><p>Твои деньги — твои правила</p></div></div>
+<div class="nav"><button class="active">⌂ &nbsp;Главная</button><button onclick="document.querySelector('#transactions').scrollIntoView({behavior:'smooth'})">☷ &nbsp;Транзакции</button><button onclick="document.querySelector('#analytics').scrollIntoView({behavior:'smooth'})">▥ &nbsp;Аналитика</button><button onclick="window.open('https://forms.gle/YWWeGTYQY9Enzig96','_blank')">＋ &nbsp;Добавить</button></div></aside>
+<main>
+<div class="top"><div><h2>Финансовый обзор</h2><div class="label">Следи за деньгами без лишней бухгалтерии</div></div><div class="date" id="today"></div></div>
+<section class="hero"><div><h3>Добро пожаловать, капитан!</h3><p>Добавляй доходы и расходы через Google Forms, а LimeBudget автоматически пересчитает твой баланс.</p></div><img class="krabs" alt="Мистер Крабс" src="data:image/png;base64,"></section>
+<section class="grid"><div class="card balance"><div><div class="label">Текущий баланс</div><div class="big" id="balance">— ₸</div><div class="label">Доходы: <b id="incomeText">—</b> &nbsp; Расходы: <b id="expenseText">—</b></div></div><div class="stats"><div class="stat income">↗ Доходы<b id="income">— ₸</b></div><div class="stat expense">↘ Расходы<b id="expense">— ₸</b></div></div></div>
+<div class="card"><h3>Добавить операцию</h3><div class="label">Источник данных</div><p style="margin:7px 0"><b>Google Forms → Google Sheets</b></p><button class="btn primary" onclick="window.open('https://forms.gle/YWWeGTYQY9Enzig96','_blank')">＋ Добавить транзакцию</button><div class="notice">После добавления нажми «Обновить».</div></div></section>
+<section class="cols"><div class="card" id="transactions"><div class="actions"><h3 style="flex:1">Последние транзакции</h3><button class="btn" onclick="loadData()">↻ Обновить</button></div><div id="tableWrap" class="empty">Загрузка данных из Google Sheets…</div></div>
+<div class="card" id="analytics"><h3>Расходы по категориям</h3><div id="categories" class="bars"><div class="empty">Загрузка…</div></div></div></section>
+<section class="card" style="margin-top:18px"><h3>Динамика доходов и расходов</h3><canvas id="chart" width="900" height="220"></canvas></section>
+<footer>LimeBudget • личный финансовый контроль • Google Sheets</footer></main></div>
+<script>
+const 1sFFuPP-IaQpLH_4a5F8uL642ypFoLzBLpdKQKDnRn8Q='1sFFuPP-IaQpLH_4a5F8uL642ypFoLzBLpdKQKDnRn8Q';
+const DEMO=[{date:'16.09.2026',type:'Доход',category:'Зарплата',desc:'Зарплата',amount:250000},{date:'16.09.2026',type:'Расход',category:'Бензин',desc:'АЗС',amount:20000},{date:'16.09.2026',type:'Расход',category:'ЖКХ',desc:'Коммунальные услуги',amount:15000},{date:'16.09.2026',type:'Расход',category:'Еда',desc:'Продукты',amount:30000}];
+const money=n=>new Intl.NumberFormat('ru-RU').format(Math.round(n))+' ₸';
+const norm=s=>String(s??'').trim().toLowerCase();
+const parseAmount=x=>Number(String(x??'').replace(/\s/g,'').replace(',','.').replace(/[^0-9.-]/g,''))||0;
+const isIncome=t=>/доход|зарп|income|приход/.test(norm(t));
+function render(rows,demo=false){
+ let income=0,expense=0,cats={}; rows.forEach(r=>{if(isIncome(r.type))income+=r.amount;else{expense+=r.amount;cats[r.category||'Другое']=(cats[r.category||'Другое']||0)+r.amount;}});
+ document.getElementById('balance').textContent=money(income-expense);document.getElementById('income').textContent=money(income);document.getElementById('expense').textContent=money(expense);document.getElementById('incomeText').textContent=money(income);document.getElementById('expenseText').textContent=money(expense);
+ let s=[...rows].slice(-12).reverse();document.getElementById('tableWrap').innerHTML=s.length?`<table><thead><tr><th>Дата</th><th>Категория</th><th>Описание</th><th>Сумма</th><th>Тип</th></tr></thead><tbody>${s.map(r=>`<tr><td>${r.date}</td><td><b>${r.category||'Другое'}</b></td><td>${r.desc||'—'}</td><td class="amount ${isIncome(r.type)?'in':'out'}">${isIncome(r.type)?'+':'−'}${money(r.amount)}</td><td><span class="tag ${isIncome(r.type)?'in':'out'}">${isIncome(r.type)?'Доход':'Расход'}</span></td></tr>`).join('')}</tbody></table>${demo?'<div class="notice">Сейчас показан пример. Чтобы сайт читал таблицу, Google Sheet нужно опубликовать для чтения в интернете.</div>':''}`:'<div class="empty">Пока нет транзакций.</div>';
+ let e=Object.entries(cats).sort((a,b)=>b[1]-a[1]),max=e[0]?.[1]||1;document.getElementById('categories').innerHTML=e.length?e.map(([k,v])=>`<div class="barline"><span>${k}</span><div class="track"><div class="fill" style="width:${v/max*100}%"></div></div><b>${money(v)}</b></div>`).join(''):'<div class="empty">Расходов пока нет.</div>';drawChart(rows);
+}
+function drawChart(rows){
+ const c=document.getElementById('chart'),ctx=c.getContext('2d'),W=c.clientWidth,H=220;c.width=W*2;c.height=H*2;ctx.scale(2,2);ctx.clearRect(0,0,W,H);let days={};rows.forEach(r=>{days[r.date]??={i:0,e:0};isIncome(r.type)?days[r.date].i+=r.amount:days[r.date].e+=r.amount});let keys=Object.keys(days).slice(-7),vals=keys.map(k=>days[k]),max=Math.max(1,...vals.flatMap(x=>[x.i,x.e]));ctx.strokeStyle='#23434a';for(let y=20;y<H-25;y+=35){ctx.beginPath();ctx.moveTo(35,y);ctx.lineTo(W-15,y);ctx.stroke()}let step=(W-70)/Math.max(1,vals.length),bw=Math.max(12,step/4);vals.forEach((v,k)=>{let x=45+k*step,ih=v.i/max*(H-55),eh=v.e/max*(H-55);ctx.fillStyle='#7bdc56';ctx.fillRect(x,H-30-ih,bw,ih);ctx.fillStyle='#ff6672';ctx.fillRect(x+bw+4,H-30-eh,bw,eh);ctx.fillStyle='#91aaa8';ctx.font='10px Arial';ctx.fillText(keys[k].slice(0,5),x,H-12)});
+}
+async function loadData(){
+ try{
+  const u=`https://docs.google.com/spreadsheets/d/${1sFFuPP-IaQpLH_4a5F8uL642ypFoLzBLpdKQKDnRn8Q}/gviz/tq?tqx=out:json`;const t=await(await fetch(u)).text();const j=JSON.parse(t.substring(t.indexOf('{'),t.lastIndexOf('}}')+1));const cols=j.table.cols.map(c=>c.label||'');const rows=j.table.rows.map(r=>r.c.map(c=>c?.v??''));const find=p=>cols.findIndex(c=>p.some(x=>norm(c).includes(x)));let di=find(['отметка времени','дата','date']),ti=find(['тип','доход/расход','вид']),ci=find(['категор','статья']),ai=find(['сумма','amount']),xi=find(['опис','комментар','назнач']);if(ai<0)throw Error('no amount');let data=rows.map(r=>({date:String(r[di>=0?di:0]||''),type:String(r[ti>=0?ti:1]||''),category:String(r[ci>=0?ci:2]||'Другое'),desc:String(r[xi>=0?xi:3]||''),amount:parseAmount(r[ai])})).filter(r=>r.amount||r.category);render(data);
+ }catch(e){console.warn(e);render(DEMO,true)}
+}
+document.getElementById('today').textContent=new Date().toLocaleDateString('ru-RU');loadData();
+</script></body></html>LI
